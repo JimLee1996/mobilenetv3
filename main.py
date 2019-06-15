@@ -226,6 +226,10 @@ def main(args):
         )
         model_without_ddp = model.module
 
+    if args.data_parallel:
+        model = torch.nn.DataParallel(model)
+        model_without_ddp = model.module
+
     criterion = nn.CrossEntropyLoss()
 
     optimizer = torch.optim.SGD(
@@ -371,6 +375,12 @@ def parse_args():
         "--pretrained",
         dest="pretrained",
         help="Use pre-trained models from the modelzoo",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--data-parallel",
+        dest="data_parallel",
+        help="Use multiple gpus to train",
         action="store_true",
     )
 
