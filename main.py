@@ -206,7 +206,15 @@ def main(args):
     )
 
     print("Creating model")
-    model = MobileNetV3()
+    if args.mode == 'large':
+        model = MobileNetV3(mode='large')
+    elif args.mode == 'small':
+        model = MobileNetV3(mode='small')
+    else:
+        raise ValueError(
+            "Expecting right mode of MobileNetv3: 'small' or 'large'"
+        )
+
     model.to(device)
     if args.distributed and args.sync_bn:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
@@ -280,6 +288,11 @@ def parse_args():
         description='PyTorch Classification Training'
     )
 
+    parser.add_argument(
+        '--mode',
+        default='large',
+        help='select mode of mobilenetv3 (default: large)'
+    )
     parser.add_argument('--data-path', default='imagenet/', help='dataset')
     parser.add_argument('--device', default='cuda', help='device')
     parser.add_argument('-b', '--batch-size', default=128, type=int)
