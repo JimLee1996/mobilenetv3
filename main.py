@@ -295,10 +295,10 @@ def parse_args():
     )
     parser.add_argument('--data-path', default='imagenet/', help='dataset')
     parser.add_argument('--device', default='cuda', help='device')
-    parser.add_argument('-b', '--batch-size', default=128, type=int)
+    parser.add_argument('-b', '--batch-size', default=512, type=int)
     parser.add_argument(
         '--epochs',
-        default=90,
+        default=150,
         type=int,
         metavar='N',
         help='number of total epochs to run'
@@ -334,7 +334,7 @@ def parse_args():
     )
     parser.add_argument(
         '--lr-gamma',
-        default=0.1,
+        default=0.5,
         type=float,
         help='decrease lr by a factor of lr-gamma'
     )
